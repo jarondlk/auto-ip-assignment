@@ -7,8 +7,6 @@ It provides a **readable overview of all network interfaces**, including type, 
 The script works in both **snapshot mode** (one-time) and **watch mode** (continuous updates).
 It is designed to help system administrators and lab users quickly assess the network health of servers.
 
----
-
 ## Features
 
 - **Interface Overview**
@@ -29,8 +27,6 @@ It is designed to help system administrators and lab users quickly assess the ne
 - **Graceful Fallbacks**
   - If `nmcli` or `ethtool` is available → provides richer info (connection profile, speed, duplex).
   - If not → falls back to `/sys/class/net` and `ip` commands.
-
----
 
 ## Dependencies
 
@@ -62,8 +58,6 @@ Install missing optional tools:
 sudo dnf install -y NetworkManager ethtool
 ```
 
----
-
 ## Usage
 
 ```bash
@@ -78,8 +72,6 @@ sudo dnf install -y NetworkManager ethtool
 |`--wide`|Show extended columns (MAC, duplex, error count, DNS, GW).|`./net_status.sh --wide`|
 |`-i IFACE`|Filter output to one specific interface.|`./net_status.sh -i ens27f0`|
 |`-h` / `--help`|Show usage help.|`./net_status.sh -h`|
-
----
 
 ## Examples
 
@@ -107,8 +99,6 @@ sudo dnf install -y NetworkManager ethtool
     ./net_status.sh -i ens27f0 --watch 1
     ```
 
----
-
 ## Output Example
 
 ### Default mode
@@ -133,8 +123,6 @@ Default GW: 192.168.1.1
 DNS:        1.1.1.1, 8.8.8.8
 ```
 
----
-
 ## Notes
 
 - **Run without sudo** for general monitoring; use `sudo` only if your system requires extra permissions to query network state.
@@ -147,8 +135,6 @@ DNS:        1.1.1.1, 8.8.8.8
 
   - `DOWN` = red
 
----
-
 ## Troubleshooting
 
 - **Missing fields (speed/duplex)** → Install `ethtool`.
@@ -156,8 +142,6 @@ DNS:        1.1.1.1, 8.8.8.8
 - **No TYPE/STATE/PROFILE** → Install `NetworkManager` for `nmcli`.
 
 - **No interfaces shown** → Check with `ip link show` if your NICs are recognized.
-
----
 
 Got it 👍 Let’s refresh this documentation so it matches the **new behavior** we built in:
 
@@ -168,8 +152,6 @@ Got it 👍 Let’s refresh this documentation so it matches the **new behavior
 - Added **lab-only use case** (no gateway / never-default)
 
 Here’s the updated version:
-
----
 
 # Auto-IP with Dynamic Check and Assignment
 
@@ -184,8 +166,6 @@ The script is designed for laboratory servers where:
 - multiple interfaces may exist (and should be selectable interactively),
 - collisions with existing IPs should be avoided automatically,
 - lab-only networks may not have a valid gateway (and should not add a default route).
-
----
 
 ## Features
 
@@ -226,8 +206,6 @@ Ensures the chosen IP is not already in use via `arping` (preferred) or `ping
 - Prints a summary of the chosen settings before applying.
 - Asks for user confirmation before applying changes.
 
----
-
 ## Dependencies
 
 The following must be installed:
@@ -252,8 +230,6 @@ Install missing tools on Rocky Linux:
 sudo dnf install -y NetworkManager iproute awk sed iputils arping
 ```
 
----
-
 ## Usage
 
 ```bash
@@ -271,8 +247,6 @@ sudo ./assign_static_ip.sh [options]
 |`-d <dns>`|DNS servers (comma-separated). Default: `1.1.1.1,8.8.8.8`.|`-d 9.9.9.9,1.1.1.1`|
 |`-r`|Reassign mode — replace current IP with a new one (manual or dynamic).|`-r`|
 |`-h`|Show help message.|—|
-
----
 
 ## Examples
 
@@ -307,8 +281,6 @@ sudo ./assign_static_ip.sh -i ens27f0 -a 192.168.250.33 -g ""
 sudo nmcli con mod static-ens27f0 ipv4.never-default yes
 ```
 
----
-
 ## Behavior
 
 1. **Interface selection**
@@ -333,8 +305,6 @@ sudo nmcli con mod static-ens27f0 ipv4.never-default yes
 5. **Final output**
     - Prints the current IP address with `ip -4 addr show`.
 
----
-
 ## Safety Notes
 
 - Always run with **sudo** (requires root).
@@ -353,8 +323,6 @@ sudo nmcli connection reload
 sudo nmcli connection up <profile>
 ```
 
----
-
 ## Troubleshooting
 
 - **"Interface not found"**  
@@ -371,4 +339,3 @@ If it should route, verify the correct gateway IP exists and responds to ARP.
 - **IP conflict still occurs**  
 Install `arping` for better detection instead of relying only on `ping`.
 
----
