@@ -143,15 +143,6 @@ DNS:        1.1.1.1, 8.8.8.8
 
 - **No interfaces shown** → Check with `ip link show` if your NICs are recognized.
 
-Got it 👍 Let’s refresh this documentation so it matches the **new behavior** we built in:
-
-- Default base is now `192.168.250.11`
-
-- Added **reassign mode (`-r`)**
-
-- Added **lab-only use case** (no gateway / never-default)
-
-Here’s the updated version:
 
 # Auto-IP with Dynamic Check and Assignment
 
